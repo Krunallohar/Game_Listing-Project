@@ -45,7 +45,7 @@ const Header = ({ onSearch }) => {
             onChange={(e) => onSearch(e.target.value)}
           />
           <button className="btn btn-primary">Search</button>
-        </div>
+        </div> 
         <button className="bookmark-btn">🔖 Bookmark</button>
       </div>
     </div>

@@ -11,7 +11,7 @@ function App() {
   return (
     <>
       <Header/>
-      {/* <Sidebar/> */}
+      <Sidebar/>
       <GameCard/>
       <GameList/>
     </>
