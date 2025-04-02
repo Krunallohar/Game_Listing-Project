@@ -1,0 +1,114 @@
+/* Game Card Container */
+.game-card {
+    background: #252525; /* Dark but not too dark */
+    color: #fff;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    max-width: 320px;
+    margin: 20px auto;
+    padding-bottom: 15px;
+}
+
+/* Hover Effect */
+.game-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+}
+
+/* Game Image */
+.game-card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-bottom: 3px solid #007bff;
+}
+
+/* Game Content */
+.game-info {
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+/* Game Title */
+.game-title {
+    font-size: 20px;
+    font-weight: bold;
+    text-align: center;
+    color: #fff;
+    margin-bottom: 8px;
+}
+
+/* Game Description */
+.game-description {
+    font-size: 14px;
+    color: #c5c5c5;
+    line-height: 1.5;
+    max-height: 48px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* Game Tags */
+.game-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    font-size: 12px;
+}
+
+.game-tags span {
+    background: #007bff;
+    padding: 4px 10px;
+    border-radius: 5px;
+    color: white;
+    font-weight: bold;
+}
+
+/* Game Category */
+.game-category {
+    font-size: 14px;
+    color: #f4b400;
+    font-weight: bold;
+}
+
+/* Game Rating */
+.game-rating {
+    background: #28a745;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-weight: bold;
+    display: inline-block;
+}
+
+/* 🎯 Layout Fix - Space for the Filter */
+.game-container {
+    display: flex;
+    justify-content: flex-start;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin-left: 230px; /* Keeps space for the filter */
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+    .game-container {
+        margin-left: 150px;
+    }
+}
+
+@media (max-width: 768px) {
+    .game-container {
+        margin-left: 0;
+        justify-content: center;
+    }
+    
+    .game-card {
+        max-width: 90%;
+    }
+}

@@ -1,0 +1,331 @@
+/* Header Container */
+.header-container {
+  background: #1e1e1e;
+  padding: 15px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  z-index: 10;
+}
+
+/* Header Content */
+.header-content {
+  width: 100%;
+  max-width: 1200px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+}
+
+/* Logo */
+.logo {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Search Bar Container (Centered) */
+.search-bar-container {
+  flex-grow: 1;
+  display: flex;
+  justify-content: center;
+}
+
+/* Search Bar */
+.search-bar {
+  display: flex;
+  align-items: center;
+  background: #ffffff;
+  padding: 6px;
+  border-radius: 5px;
+  max-width: 400px;
+  width: 100%;
+}
+
+.search-bar input {
+  flex: 1;
+  border: none;
+  outline: none;
+  padding: 8px;
+  font-size: 14px;
+}
+
+.search-bar button {
+  border: none;
+  padding: 8px 15px;
+  background-color: #007bff;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+/* Bookmark Button (Hidden in mobile) */
+.bookmark-desktop {
+  display: block;
+}
+
+.bookmark-btn {
+  padding: 10px 20px;
+  background-color: #ffc107;
+  color: #212529;
+  border: none;
+  font-weight: bold;
+  cursor: pointer;
+  border-radius: 30px;
+}
+
+/* Hamburger Menu */
+.hamburger {
+  font-size: 24px;
+  color: white;
+  cursor: pointer;
+  display: none;
+}
+
+/* Mobile Dropdown Menu */
+.mobile-menu {
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  background: #333;
+  position: absolute;
+  top: 100%; /* Opens below the header */
+  left: 0;
+  width: 100%;
+  padding: 15px;
+  box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease-in-out;
+}
+
+
+/* Open state for mobile menu */
+.mobile-menu.open {
+  display: flex;
+}
+
+@media (min-width: 769px) {
+  .mobile-menu {
+    display: none !important;
+  }
+}
+
+/* Mobile menu search bar */
+.mobile-menu .search-bar {
+  margin-bottom: 10px;
+  width: 90%;
+}
+
+/* Mobile menu bookmark button */
+.mobile-menu .bookmark-btn {
+  display: block;
+  width: 90%;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+  .search-bar-container {
+    display: none;
+  }
+
+  .bookmark-desktop {
+    display: none; /* Hide desktop bookmark */
+  }
+
+  .hamburger {
+    display: block;
+  }
+}
+
+/* Ensure search bar is always in one line */
+.mobile-menu .search-bar {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  max-width: 320px;
+  background: white;
+  border-radius: 5px;
+  overflow: hidden; /* Prevents elements from breaking out */
+  padding: 0;
+}
+
+/* Search Input - Takes Full Space */
+.mobile-menu .search-bar input {
+  flex: 1;
+  border: none;
+  padding: 10px;
+  font-size: 14px;
+  min-width: 0; /* Prevents stretching issues */
+}
+
+/* Search Button - Fixed Width */
+.mobile-menu .search-bar button {
+  padding: 10px 15px;
+  border: none;
+  background-color: #007bff;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  border-radius: 0 5px 5px 0;
+  white-space: nowrap;
+  min-width: 70px; /* Prevents shrinking */
+  text-align: center;
+}
+
+/* Fix Overflow Issues */
+.mobile-menu .search-bar input:focus {
+  outline: none;
+}
+
+
+
+
+
+
+
+
+
+
+
+/* 📌 Sidebar Container */
+.sidebar {
+  width: 250px;
+  height: 85vh;
+  background: #cbddf5;
+  color: rgb(0, 0, 0);
+  padding: 15px;
+  position: fixed;
+  margin-top: 80px;
+  top: 0;
+  left: 0;
+  overflow-y: auto;
+  transition: width 0.3s ease;
+  border-radius: 9px;
+}
+
+/* 🎛️ Sidebar Closed State */
+.sidebar.closed {
+  width: 60px;
+  overflow: hidden;
+}
+
+/* 📂 Sidebar Toggle Button */
+.toggle-btn {
+  position: absolute;
+  top: 15px;
+  right: 10px;  /* Keeps it inside the sidebar */
+  background: #000000;
+  color: rgb(238, 218, 218);
+  border: none;
+  padding: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  z-index: 1000; /* Ensures it stays on top */
+}
+
+/* 📱 Adjust for Small Screens */
+@media (max-width: 768px) {
+  .toggle-btn {
+    right: -35px; /* Slightly outside the sidebar for better visibility */
+  }
+}
+
+/* 🔽 Sidebar Content */
+.sidebar-content {
+  margin-top: 10px;
+}
+
+.sidebar-content h2 {
+  font-size: 18px;
+  margin-bottom: 15px;
+}
+
+/* 📌 Filter Groups */
+.filter-group {
+  margin-bottom: 15px;
+
+}
+
+.filter-group label {
+  display: block;
+  font-size: 14px;
+  margin-bottom: 5px;
+}
+
+.filter-group select {
+  width: 100%;
+  padding: 8px;
+  border-radius: 5px;
+  border: none;
+}
+
+/* 📏 Responsive Design */
+@media (max-width: 768px) {
+  .sidebar {
+    width: 200px;
+  }
+
+  .sidebar.closed {
+    width: 50px;
+  }
+
+  .toggle-btn {
+    top: 10px;
+    right: -35px;
+  }
+}
+
+
+
+
+
+/* GAME LIST */
+
+.game-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+  padding: 20px;
+  width: 100%;
+}
+
+.game-card {
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 10px;
+  text-align: center;
+  transition: transform 0.3s;
+}
+
+.game-card:hover {
+  transform: scale(1.05);
+}
+
+.game-image {
+  width: 100%;
+  border-radius: 8px;
+  height: 150px;
+  object-fit: cover;
+}
+
+.game-info h3 {
+  font-size: 16px;
+  margin: 10px 0;
+}
+
+.game-info p {
+  font-size: 14px;
+  color: #666;
+}
+
+
+
+
+
