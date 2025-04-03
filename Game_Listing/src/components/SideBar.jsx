@@ -6,7 +6,7 @@ const Sidebar = ({ onApplyFilters, onResetFilters }) => {
     genre: "",
     tag: "",
     year: "",
-    popularity: "",
+    ordering: "",
   });
 
   const [genres, setGenres] = useState([]);
@@ -33,7 +33,7 @@ const Sidebar = ({ onApplyFilters, onResetFilters }) => {
   };
 
   const handleReset = () => {
-    setFilters({ genre: "", tag: "", year: "", popularity: "" });
+    setFilters({ genre: "", tag: "", year: "", ordering: "" });
     onResetFilters();
   };
 
@@ -88,7 +88,7 @@ const Sidebar = ({ onApplyFilters, onResetFilters }) => {
           {/* Popularity Filter */}
           <div className="filter-group">
             <label>Popularity:</label>
-            <select name="popularity" value={filters.popularity} onChange={handleFilterChange}>
+            <select name="ordering" value={filters.ordering} onChange={handleFilterChange}>
               <option value="">All</option>
               <option value="-rating">Highest Rated</option>
               <option value="-metacritic">Best Reviews</option>
