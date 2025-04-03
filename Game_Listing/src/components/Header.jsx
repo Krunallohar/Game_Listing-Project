@@ -15,6 +15,7 @@ const Header = () => {
       if (searchTerm.length > 2) { // Minimum 3 characters before searching
         const results = await searchGames(searchTerm);
         setSearchResults(results || []);
+        console.log(results)
       } else {
         setSearchResults([]);
       }
@@ -55,6 +56,7 @@ const Header = () => {
             <ul className="search-dropdown">
               {searchResults.map((game) => (
                 <li key={game.id} onClick={() => handleSearchClick(game.id)}>
+                  <img src={game.background_image} alt={game.name} className="search-game-img" />
                   {game.name}
                 </li>
               ))}

@@ -1,24 +1,44 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import "./SideBar.css";
 
-const Sidebar = ({ onFilterChange }) => {
+const Sidebar = ({ onApplyFilters, onResetFilters }) => {
   const [filters, setFilters] = useState({
-    category: "",
+    genre: "",
     tag: "",
     year: "",
     popularity: "",
   });
 
-  const [isOpen, setIsOpen] = useState(true); // Sidebar visibility state
+  const [genres, setGenres] = useState([]);
+  const [tags, setTags] = useState([]);
+  const [isOpen, setIsOpen] = useState(true);
+
+  useEffect(() => {
+    fetch("https://api.rawg.io/api/genres?key=194d1de13bf04a3fa84eedccbd36e579")
+      .then((res) => res.json())
+      .then((data) => setGenres(data.results));
+
+    fetch("https://api.rawg.io/api/tags?key=194d1de13bf04a3fa84eedccbd36e579")
+      .then((res) => res.json())
+      .then((data) => setTags(data.results));
+  }, []);
 
   const handleFilterChange = (e) => {
     const { name, value } = e.target;
     setFilters((prevFilters) => ({ ...prevFilters, [name]: value }));
-    onFilterChange({ ...filters, [name]: value });
+  };
+
+  const handleApply = () => {
+    onApplyFilters(filters);
+  };
+
+  const handleReset = () => {
+    setFilters({ genre: "", tag: "", year: "", popularity: "" });
+    onResetFilters();
   };
 
   return (
     <div className={`sidebar ${isOpen ? "closed" : "open"}`}>
-      {/* Toggle Button */}
       <button className="toggle-btn" onClick={() => setIsOpen(!isOpen)}>
         {isOpen ? "📂" : "❌"}
       </button>
@@ -27,51 +47,63 @@ const Sidebar = ({ onFilterChange }) => {
         <div className="sidebar-content">
           <h2>Filters</h2>
 
-          {/* Category Filter */}
+          {/* Genre Filter */}
           <div className="filter-group">
-            <label>Category:</label>
-            <select name="category" onChange={handleFilterChange}>
+            <label>Genre:</label>
+            <select name="genre" value={filters.genre} onChange={handleFilterChange}>
               <option value="">All</option>
-              <option value="action">Action</option>
-              <option value="adventure">Adventure</option>
-              <option value="rpg">RPG</option>
-              <option value="strategy">Strategy</option>
+              {genres.map((genre) => (
+                <option key={genre.id} value={genre.slug}>
+                  {genre.name}
+                </option>
+              ))}
             </select>
           </div>
 
           {/* Tags Filter */}
           <div className="filter-group">
             <label>Tags:</label>
-            <select name="tag" onChange={handleFilterChange}>
+            <select name="tag" value={filters.tag} onChange={handleFilterChange}>
               <option value="">All</option>
-              <option value="multiplayer">Multiplayer</option>
-              <option value="singleplayer">Singleplayer</option>
-              <option value="open-world">Open World</option>
+              {tags.map((tag) => (
+                <option key={tag.id} value={tag.slug}>
+                  {tag.name}
+                </option>
+              ))}
             </select>
           </div>
 
-          {/* Year Filter */}
+          {/* Release Year Filter */}
           <div className="filter-group">
             <label>Release Year:</label>
-            <select name="year" onChange={handleFilterChange}>
-              <option value="">All</option>
-              <option value="2024">2024</option>
-              <option value="2023">2023</option>
-              <option value="2022">2022</option>
-              <option value="2021">2021</option>
-            </select>
+            <input
+              type="number"
+              name="year"
+              value={filters.year}
+              placeholder="Enter Year"
+              onChange={handleFilterChange}
+            />
           </div>
 
           {/* Popularity Filter */}
           <div className="filter-group">
             <label>Popularity:</label>
-            <select name="popularity" onChange={handleFilterChange}>
+            <select name="popularity" value={filters.popularity} onChange={handleFilterChange}>
               <option value="">All</option>
-              <option value="most-popular">Most Popular</option>
-              <option value="trending">Trending</option>
-              <option value="new">New Releases</option>
+              <option value="-rating">Highest Rated</option>
+              <option value="-metacritic">Best Reviews</option>
+              <option value="-added">Most Added</option>
+              <option value="-released">Latest Releases</option>
             </select>
           </div>
+
+          {/* Apply & Reset Buttons */}
+          <button className="apply-btn" onClick={handleApply}>
+            Apply Filters
+          </button>
+          <button className="reset-btn" onClick={handleReset}>
+            Reset Filters
+          </button>
         </div>
       )}
     </div>
