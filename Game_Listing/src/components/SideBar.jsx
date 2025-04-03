@@ -17,13 +17,13 @@ const Sidebar = ({ onFilterChange }) => {
   };
 
   return (
-    <div className={`sidebar ${isOpen ? "open" : "closed"}`}>
+    <div className={`sidebar ${isOpen ? "closed" : "open"}`}>
       {/* Toggle Button */}
       <button className="toggle-btn" onClick={() => setIsOpen(!isOpen)}>
-        {isOpen ? "❌" : "📂"}
+        {isOpen ? "📂" : "❌"}
       </button>
 
-      {isOpen && (
+      {!isOpen && (
         <div className="sidebar-content">
           <h2>Filters</h2>
 

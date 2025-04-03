@@ -1,0 +1,32 @@
+/* Search Dropdown */
+.search-bar-container {
+  position: relative;
+  width: 100%;
+  max-width: 400px;
+}
+
+.search-dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  background: white;
+  border: 1px solid #ddd;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  max-height: 200px;
+  overflow-y: auto;
+  z-index: 10;
+}
+
+.search-dropdown li {
+  padding: 10px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.search-dropdown li:hover {
+  background: #f4f4f4;
+}
