@@ -1,27 +1,77 @@
-.game-details {
-    max-width: 800px;
-    margin: auto;
-    padding: 20px;
-    color: white;
-  }
-  
-  .game-image {
-    width: 100%;
-    border-radius: 10px;
-  }
-  
-  .screenshots {
-    display: flex;
-    gap: 10px;
-    overflow-x: auto;
-  }
-  
-  .screenshots img {
-    width: 150px;
-    border-radius: 5px;
-  }
-  
-  h1, h2 {
-    color: #ffd700;
-  }
-  
+.game-detail-container {
+  padding: 2rem;
+  max-width: 1200px;
+  margin: auto;
+  font-family: "Segoe UI", sans-serif;
+  color: #333;
+}
+
+.top-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.main-image {
+  max-width: 100%;
+  height: auto;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.bookmark-btn {
+  margin-top: 1rem;
+  padding: 10px 16px;
+  font-size: 1rem;
+  border: none;
+  border-radius: 8px;
+  background-color: #007bff;
+  color: white;
+  cursor: pointer;
+}
+
+.bookmark-btn:hover {
+  background-color: #0056b3;
+}
+
+.description {
+  margin-top: 1.5rem;
+  line-height: 1.6;
+  font-size: 1rem;
+}
+
+.info-section {
+  margin-top: 1rem;
+  font-size: 1rem;
+}
+
+.screenshot-slider {
+  margin-top: 2rem;
+}
+
+.screenshot-slider h3 {
+  margin-bottom: 1rem;
+}
+
+.screenshots {
+  display: flex;
+  overflow-x: auto;
+  gap: 1rem;
+  padding-bottom: 1rem;
+}
+
+.screenshots img {
+  height: 200px;
+  border-radius: 10px;
+  flex-shrink: 0;
+  object-fit: cover;
+}
+
+.requirements-section {
+  margin-top: 2rem;
+  background-color: #f9f9f9;
+  padding: 1rem;
+  border-left: 4px solid #007bff;
+  border-radius: 8px;
+}

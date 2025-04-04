@@ -1,10 +1,13 @@
+// src/main.jsx
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { Provider } from "react-redux";
 import App from "./App.jsx";
 import GameList from "./components/GameList.jsx";
-import GameDetail from "./components/GameDetail.jsx"; // ✅ Make sure it's GameDetails not GameDetail
-import BookmarkedGames from "./components/BookmarkedGames.jsx"; // ✅ Import it
+import GameDetail from "./components/GameDetail.jsx"; // or GameDetails.jsx if renamed
+import BookmarkedGames from "./components/BookmarkedGames.jsx";
+import store from "./redux/store"; // 👈 make sure the path is correct
 import "./index.css";
 
 const router = createBrowserRouter([
@@ -17,11 +20,11 @@ const router = createBrowserRouter([
         element: <GameList />,
       },
       {
-        path: "game/:id",
-        element: <GameDetail />,
+        path: "/game/:id",
+        element: <GameDetail />, // or <GameDetails />
       },
       {
-        path: "bookmarks", // ✅ ADD THIS ROUTE
+        path: "/bookmarks",
         element: <BookmarkedGames />,
       },
     ],
@@ -30,6 +33,8 @@ const router = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <RouterProvider router={router} />
+    <Provider store={store}> {/* ✅ Wrap the whole app */}
+      <RouterProvider router={router} />
+    </Provider>
   </React.StrictMode>
 );

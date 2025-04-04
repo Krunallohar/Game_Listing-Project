@@ -1,9 +1,10 @@
+// src/redux/store.js
 import { configureStore } from "@reduxjs/toolkit";
 import bookmarkReducer from "./bookmarkSlice";
 
 const store = configureStore({
   reducer: {
-    bookmark: bookmarkReducer,
+    bookmarks: bookmarkReducer,
   },
 });
 

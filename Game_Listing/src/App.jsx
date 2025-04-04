@@ -7,11 +7,12 @@ import { Outlet } from 'react-router-dom';
 function App() {
   const location = useLocation();
   const isBookmarkPage = location.pathname === "/bookmarks";
+  const isGameDetailPage = location.pathname.startsWith("/game/"); // 👈 detects detail page
 
   return (
     <>
       <Header />
-      {!isBookmarkPage && <Sidebar />}
+      {!(isBookmarkPage || isGameDetailPage) && <Sidebar />} {/* 👈 hide sidebar */}
       <Outlet />
     </>
   );
