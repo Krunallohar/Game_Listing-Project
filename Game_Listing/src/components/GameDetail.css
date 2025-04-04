@@ -1,77 +1,150 @@
-.game-detail-container {
-  padding: 2rem;
-  max-width: 1200px;
-  margin: auto;
-  font-family: "Segoe UI", sans-serif;
-  color: #333;
+.game-detail-wrapper {
+  position: relative;
+  max-width: 1100px;
+  margin: 40px auto;
+  padding: 0 15px;
 }
 
-.top-section {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-bottom: 1rem;
-}
-
-.main-image {
-  max-width: 100%;
-  height: auto;
-  border-radius: 12px;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-}
-
-.bookmark-btn {
-  margin-top: 1rem;
-  padding: 10px 16px;
-  font-size: 1rem;
+.back-button {
+  position: absolute;
+  top: -35px;
+  left: 010;
+  padding: 8px 16px;
   border: none;
-  border-radius: 8px;
-  background-color: #007bff;
+  background-color: #333;
   color: white;
+  border-radius: 6px;
   cursor: pointer;
+  z-index: 1;
 }
 
-.bookmark-btn:hover {
-  background-color: #0056b3;
+.back-button:hover {
+  background-color: #555;
 }
 
-.description {
-  margin-top: 1.5rem;
+.game-detail-box {
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+}
+
+.game-image-full {
+  width: 100%;
+  height: 400px;
+  object-fit: cover;
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+}
+
+.game-detail-content {
+  padding: 25px;
+}
+
+.title-bookmark-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.game-title {
+  font-size: 2.2rem;
+  font-weight: bold;
+  margin-bottom: 10px;
+  color: #000000;
+}
+
+.bookmark-btn-detail {
+  background-color: #eee;
+  color: #555;
+  padding: 8px 14px;
+  font-size: 14px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: 0.3s ease;
+}
+
+.bookmark-btn-detail:hover {
+  background-color: #ddd;
+}
+
+.bookmark-btn-detail.active {
+  background-color: gold;
+  color: #222;
+  border-color: gold;
+}
+
+.game-meta {
+  color: #666;
+  margin-bottom: 20px;
+  display: flex;
+  gap: 20px;
+  font-size: 1rem;
+  flex-wrap: wrap;
+}
+
+.game-description {
+  color: #333;
   line-height: 1.6;
-  font-size: 1rem;
-}
-
-.info-section {
-  margin-top: 1rem;
-  font-size: 1rem;
+  margin-bottom: 30px;
 }
 
 .screenshot-slider {
-  margin-top: 2rem;
+  margin-top: 20px;
 }
 
-.screenshot-slider h3 {
-  margin-bottom: 1rem;
+.screenshot-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(48%, 1fr));
+  gap: 16px;
+  margin-top: 10px;
 }
 
-.screenshots {
-  display: flex;
-  overflow-x: auto;
-  gap: 1rem;
-  padding-bottom: 1rem;
-}
-
-.screenshots img {
-  height: 200px;
-  border-radius: 10px;
-  flex-shrink: 0;
+.screenshot-img {
+  width: 100%;
+  height: 180px;
   object-fit: cover;
+  border-radius: 10px;
 }
 
+/* Requirements */
 .requirements-section {
-  margin-top: 2rem;
-  background-color: #f9f9f9;
-  padding: 1rem;
-  border-left: 4px solid #007bff;
-  border-radius: 8px;
+  margin-top: 30px;
+  padding-top: 20px;
+  border-top: 1px solid #eee;
+}
+
+.platform-block {
+  margin-bottom: 10px;
+  color: #444;
+}
+
+.platform-block p {
+  margin: 4px 0;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .screenshot-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .game-image-full {
+    height: 250px;
+  }
+
+  .back-button {
+    top: -50px;
+  }
+
+  .title-bookmark-container {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
 }

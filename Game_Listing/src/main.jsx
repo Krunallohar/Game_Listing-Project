@@ -3,17 +3,30 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { Provider } from "react-redux";
+import {
+  ClerkProvider,
+  SignedIn,
+  SignedOut,
+  RedirectToSignIn
+} from "@clerk/clerk-react";
+
 import App from "./App.jsx";
 import GameList from "./components/GameList.jsx";
-import GameDetail from "./components/GameDetail.jsx"; // or GameDetails.jsx if renamed
+import GameDetail from "./components/GameDetail.jsx";
 import BookmarkedGames from "./components/BookmarkedGames.jsx";
-import store from "./redux/store"; // 👈 make sure the path is correct
+import store from "./redux/store";
 import "./index.css";
+
+const clerkFrontendApi = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY;
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <App />,
+    element: (
+      <Provider store={store}> {/* ✅ Move Provider inside the route */}
+        <App />
+      </Provider>
+    ),
     children: [
       {
         index: true,
@@ -21,11 +34,20 @@ const router = createBrowserRouter([
       },
       {
         path: "/game/:id",
-        element: <GameDetail />, // or <GameDetails />
+        element: <GameDetail />,
       },
       {
         path: "/bookmarks",
-        element: <BookmarkedGames />,
+        element: (
+          <>
+            <SignedIn>
+              <BookmarkedGames />
+            </SignedIn>
+            <SignedOut>
+              <RedirectToSignIn />
+            </SignedOut>
+          </>
+        ),
       },
     ],
   },
@@ -33,8 +55,8 @@ const router = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <Provider store={store}> {/* ✅ Wrap the whole app */}
+    <ClerkProvider publishableKey={clerkFrontendApi}>
       <RouterProvider router={router} />
-    </Provider>
+    </ClerkProvider>
   </React.StrictMode>
 );

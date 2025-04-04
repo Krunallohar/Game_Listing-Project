@@ -1,91 +1,115 @@
+// src/components/GameDetail.jsx
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { addBookmark, removeBookmark } from "../redux/bookmarkSlice";
+import { FaRegBookmark, FaBookmark } from "react-icons/fa";
 import "./GameDetail.css";
 
 const GameDetail = () => {
   const { id } = useParams();
-  const [game, setGame] = useState(null);
-  const [screenshots, setScreenshots] = useState([]);
-  const API_KEY = import.meta.env.VITE_RAWG_API_KEY;
-
+  const navigate = useNavigate();
   const dispatch = useDispatch();
-  const bookmarks = useSelector((state) => state.bookmarks.bookmarkedGames);
-  const isBookmarked = bookmarks.some((item) => item.id === game?.id);
+  const bookmarks = useSelector((state) => state.bookmark.bookmarkedGames);
+  const [game, setGame] = useState(null);
 
   useEffect(() => {
     const fetchGameDetails = async () => {
-      try {
-        const response = await fetch(`https://api.rawg.io/api/games/${id}?key=${API_KEY}`);
-        const data = await response.json();
-        setGame(data);
+      const response = await fetch(
+        `https://api.rawg.io/api/games/${id}?key=${import.meta.env.VITE_RAWG_API_KEY}`
+      );
+      const data = await response.json();
 
-        // Fetch screenshots
-        const screenRes = await fetch(`https://api.rawg.io/api/games/${id}/screenshots?key=${API_KEY}`);
-        const screenData = await screenRes.json();
-        setScreenshots(screenData.results || []);
-      } catch (error) {
-        console.error("Error fetching game details:", error);
-      }
+      const screenshotsRes = await fetch(
+        `https://api.rawg.io/api/games/${id}/screenshots?key=${import.meta.env.VITE_RAWG_API_KEY}`
+      );
+      const screenshotsData = await screenshotsRes.json();
+
+      setGame({
+        ...data,
+        screenshots: screenshotsData.results,
+      });
     };
 
     fetchGameDetails();
-  }, [id, API_KEY]);
-
-  const handleBookmarkToggle = () => {
-    if (isBookmarked) {
-      dispatch(removeBookmark(game.id));
-    } else {
-      dispatch(addBookmark(game));
-    }
-  };
+  }, [id]);
 
   if (!game) return <div>Loading...</div>;
 
-  const requirements = game.platforms?.[0]?.requirements;
+  const isBookmarked = bookmarks?.some((item) => item.id === game.id);
+  const handleAddBookmark = () => dispatch(addBookmark(game));
+  const handleRemoveBookmark = () => dispatch(removeBookmark(game.id));
 
   return (
-    <div className="game-detail-container">
-      <h1>{game.name}</h1>
+    <div className="game-detail-wrapper">
+      <button className="back-button" onClick={() => navigate(-1)}>← Back</button>
 
-      <div className="top-section">
+      <div className="game-detail-box">
         <img
-          className="main-image"
           src={game.background_image}
           alt={game.name}
+          className="game-image-full"
         />
-        <button className="bookmark-btn" onClick={handleBookmarkToggle}>
-          {isBookmarked ? "★ Bookmarked" : "☆ Add to Bookmarks"}
-        </button>
-      </div>
 
-      <p className="description" dangerouslySetInnerHTML={{ __html: game.description }}></p>
-
-      <div className="info-section">
-        <p><strong>Released:</strong> {game.released}</p>
-        <p><strong>Rating:</strong> {game.rating} / 5</p>
-        <p><strong>Genres:</strong> {game.genres.map((g) => g.name).join(", ")}</p>
-      </div>
-
-      {screenshots.length > 0 && (
-        <div className="screenshot-slider">
-          <h3>Screenshots</h3>
-          <div className="screenshots">
-            {screenshots.map((shot) => (
-              <img key={shot.id} src={shot.image} alt="Screenshot" />
-            ))}
+        <div className="game-detail-content">
+          <div className="title-bookmark-container">
+            <h1 className="game-title">{game.name}</h1>
+            <div className="detail-actions">
+              {isBookmarked ? (
+                <button className="bookmark-btn-detail active" onClick={handleRemoveBookmark}>
+                  <FaBookmark size={20} /> Bookmarked
+                </button>
+              ) : (
+                <button className="bookmark-btn-detail" onClick={handleAddBookmark}>
+                  <FaRegBookmark size={20} /> Bookmark
+                </button>
+              )}
+            </div>
           </div>
-        </div>
-      )}
 
-      {requirements && (
-        <div className="requirements-section">
-          <h3>System Requirements</h3>
-          <p><strong>Minimum:</strong> {requirements.minimum}</p>
-          <p><strong>Recommended:</strong> {requirements.recommended}</p>
+          <div className="game-meta">
+            <span>⭐ Rating: {game.rating}</span>
+            <span>📅 Released: {game.released}</span>
+          </div>
+
+          <div className="game-description">
+            <p dangerouslySetInnerHTML={{ __html: game.description }} />
+          </div>
+
+          {game.screenshots && game.screenshots.length > 0 && (
+            <div className="screenshot-slider">
+              <h3>Screenshots</h3>
+              <div className="screenshot-grid">
+                {game.screenshots.map((screenshot, index) => (
+                  <img
+                    key={index}
+                    src={screenshot.image}
+                    alt={`Screenshot ${index + 1}`}
+                    className="screenshot-img"
+                  />
+                ))}
+              </div>
+            </div>
+          )}
+
+          {game.platforms && (
+            <div className="requirements-section">
+              <h3>System Requirements</h3>
+              {game.platforms.map((platform, idx) => (
+                <div key={idx} className="platform-block">
+                  <strong>{platform.platform.name}</strong>
+                  {platform.requirements?.minimum && (
+                    <p>🧾 Min: {platform.requirements.minimum}</p>
+                  )}
+                  {platform.requirements?.recommended && (
+                    <p>✅ Recommended: {platform.requirements.recommended}</p>
+                  )}
+                </div>
+              ))}
+            </div>
+          )}
         </div>
-      )}
+      </div>
     </div>
   );
 };
