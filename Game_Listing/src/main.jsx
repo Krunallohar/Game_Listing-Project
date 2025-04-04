@@ -22,11 +22,7 @@ const clerkFrontendApi = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY;
 const router = createBrowserRouter([
   {
     path: "/",
-    element: (
-      <Provider store={store}> {/* ✅ Move Provider inside the route */}
-        <App />
-      </Provider>
-    ),
+    element: <App />,
     children: [
       {
         index: true,
@@ -56,7 +52,9 @@ const router = createBrowserRouter([
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <ClerkProvider publishableKey={clerkFrontendApi}>
-      <RouterProvider router={router} />
+      <Provider store={store}>
+        <RouterProvider router={router} />
+      </Provider>
     </ClerkProvider>
   </React.StrictMode>
 );

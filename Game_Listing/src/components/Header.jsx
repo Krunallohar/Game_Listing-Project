@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { FaBars, FaTimes } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
-import { searchGames } from "../utils/FetchGames"; // New search function
+import { SignedIn, SignedOut, UserButton, SignInButton } from "@clerk/clerk-react";
+import { searchGames } from "../utils/FetchGames";
 import "./Header.css";
 
 const Header = () => {
@@ -12,10 +13,9 @@ const Header = () => {
 
   useEffect(() => {
     const fetchSearchResults = async () => {
-      if (searchTerm.length > 2) { // Minimum 3 characters before searching
+      if (searchTerm.length > 2) {
         const results = await searchGames(searchTerm);
         setSearchResults(results || []);
-        console.log(results)
       } else {
         setSearchResults([]);
       }
@@ -25,21 +25,21 @@ const Header = () => {
   }, [searchTerm]);
 
   const handleSearchClick = (gameId) => {
-    setSearchTerm(""); // Clear search input
-    setSearchResults([]); // Hide dropdown
-    navigate(`/game/${gameId}`); // Navigate to game details
+    setSearchTerm("");
+    setSearchResults([]);
+    navigate(`/game/${gameId}`);
   };
 
   return (
     <div className="container-fluid px-3 py-3 shadow-lg rounded header-container">
       <div className="header-content">
-        {/* Logo - Navigates to Home */}
+        {/* Logo */}
         <Link to="/" className="logo" style={{ textDecoration: "none" }}>
           <span role="img" aria-label="game-icon" className="fs-3">🎮</span>
           Game Listing
         </Link>
 
-        {/* Search Bar with Dropdown */}
+        {/* Search Bar */}
         <div className="search-bar-container">
           <div className="search-bar">
             <input
@@ -51,7 +51,6 @@ const Header = () => {
             <button className="btn btn-primary">Search</button>
           </div>
 
-          {/* Dropdown for search suggestions */}
           {searchResults.length > 0 && (
             <ul className="search-dropdown">
               {searchResults.map((game) => (
@@ -64,14 +63,26 @@ const Header = () => {
           )}
         </div>
 
-        {/* Hamburger Menu */}
+        {/* Hamburger Menu (Mobile) */}
         <div className="hamburger" onClick={() => setMenuOpen(!menuOpen)}>
           {menuOpen ? <FaTimes /> : <FaBars />}
         </div>
 
-        {/* Bookmark Button */}
-        <div className="bookmark-desktop">
-          <Link to="/bookmarks" className="bookmark-btn">🔖 Bookmark</Link>
+        {/* Bookmark & Auth Section */}
+        <div className="header-right">
+          <SignedIn>
+            {/* Bookmark visible only when signed in */}
+            <Link to="/bookmarks" className="bookmark-btn">🔖 Bookmark</Link>
+            {/* Auth user button on right side */}
+            <UserButton afterSignOutUrl="/" />
+          </SignedIn>
+
+          <SignedOut>
+            {/* Show sign in / sign up when not signed in */}
+            <SignInButton mode="modal">
+              <button className="btn btn-outline-primary ms-3">Sign In / Sign Up</button>
+            </SignInButton>
+          </SignedOut>
         </div>
       </div>
     </div>

@@ -1,9 +1,9 @@
-// src/components/GameDetail.jsx
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { addBookmark, removeBookmark } from "../redux/bookmarkSlice";
 import { FaRegBookmark, FaBookmark } from "react-icons/fa";
+import { SignedIn, SignedOut, useUser, SignInButton } from "@clerk/clerk-react";
 import "./GameDetail.css";
 
 const GameDetail = () => {
@@ -12,6 +12,7 @@ const GameDetail = () => {
   const dispatch = useDispatch();
   const bookmarks = useSelector((state) => state.bookmark.bookmarkedGames);
   const [game, setGame] = useState(null);
+  const { user } = useUser();
 
   useEffect(() => {
     const fetchGameDetails = async () => {
@@ -54,17 +55,30 @@ const GameDetail = () => {
         <div className="game-detail-content">
           <div className="title-bookmark-container">
             <h1 className="game-title">{game.name}</h1>
-            <div className="detail-actions">
-              {isBookmarked ? (
-                <button className="bookmark-btn-detail active" onClick={handleRemoveBookmark}>
-                  <FaBookmark size={20} /> Bookmarked
-                </button>
-              ) : (
-                <button className="bookmark-btn-detail" onClick={handleAddBookmark}>
-                  <FaRegBookmark size={20} /> Bookmark
-                </button>
-              )}
-            </div>
+
+            <SignedIn>
+              <div className="detail-actions">
+                {isBookmarked ? (
+                  <button className="bookmark-btn-detail active" onClick={handleRemoveBookmark}>
+                    <FaBookmark size={20} /> Bookmarked
+                  </button>
+                ) : (
+                  <button className="bookmark-btn-detail" onClick={handleAddBookmark}>
+                    <FaRegBookmark size={20} /> Bookmark
+                  </button>
+                )}
+              </div>
+            </SignedIn>
+
+            <SignedOut>
+              <div className="detail-actions">
+                <SignInButton>
+                  <button className="bookmark-btn-detail">
+                    <FaRegBookmark size={20} /> Sign in to Bookmark
+                  </button>
+                </SignInButton>
+              </div>
+            </SignedOut>
           </div>
 
           <div className="game-meta">
@@ -76,7 +90,7 @@ const GameDetail = () => {
             <p dangerouslySetInnerHTML={{ __html: game.description }} />
           </div>
 
-          {game.screenshots && game.screenshots.length > 0 && (
+          {game.screenshots?.length > 0 && (
             <div className="screenshot-slider">
               <h3>Screenshots</h3>
               <div className="screenshot-grid">

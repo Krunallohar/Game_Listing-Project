@@ -3,17 +3,24 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { addBookmark, removeBookmark } from "../redux/bookmarkSlice";
 import { FaRegBookmark, FaBookmark } from "react-icons/fa";
+import { SignedIn, SignedOut, useUser } from "@clerk/clerk-react";
 import "./GameCard.css";
 
 const GameCard = ({ game }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const { user } = useUser();
+
   const bookmarks = useSelector((state) => state.bookmark.bookmarkedGames);
   const isBookmarked = bookmarks.some((item) => item.id === game.id);
 
   const handleBookmarkToggle = (e) => {
-    e.stopPropagation(); // prevent card click when clicking bookmark
-    isBookmarked ? dispatch(removeBookmark(game.id)) : dispatch(addBookmark(game));
+    e.stopPropagation();
+    if (isBookmarked) {
+      dispatch(removeBookmark(game.id));
+    } else {
+      dispatch(addBookmark(game));
+    }
   };
 
   if (!game) return null;
@@ -26,14 +33,16 @@ const GameCard = ({ game }) => {
         className="game-image"
       />
 
-      {/* Bookmark icon */}
-      <div className="bookmark-icon" onClick={handleBookmarkToggle}>
-        {isBookmarked ? (
-          <FaBookmark size={20} color="gold" />
-        ) : (
-          <FaRegBookmark size={20} color="gray" />
-        )}
-      </div>
+      {/* Bookmark icon only visible when signed in */}
+      <SignedIn>
+        <div className="bookmark-icon" onClick={handleBookmarkToggle}>
+          {isBookmarked ? (
+            <FaBookmark size={20} color="gold" />
+          ) : (
+            <FaRegBookmark size={20} color="gray" />
+          )}
+        </div>
+      </SignedIn>
 
       <div className="game-info">
         <h3 className="games-title">{game.name || "Unknown Game"}</h3>
