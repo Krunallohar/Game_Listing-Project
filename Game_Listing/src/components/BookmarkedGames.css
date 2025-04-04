@@ -1,71 +1,80 @@
 .bookmarked-container {
-  max-width: 1200px;
-  margin: 40px auto;
-  padding: 0 20px;
+  padding: 2rem;
+  background-color: #f9f9f9;
+  min-height: 100vh;
 }
 
-.bookmarked-container h1 {
+.bookmarked-container h2 {
   font-size: 2rem;
-  margin-bottom: 20px;
+  margin-bottom: 1.5rem;
+  color: #333;
+  text-align: center;
 }
+
+.bookmarked-card-link {
+  text-decoration: none;
+  color: inherit; /* Optional: keeps text color consistent */
+}
+
+.game-genres {
+  display: inline;
+  margin-bottom: 10px;
+  color: #000cf7;
+}
+
 
 .bookmarked-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-  gap: 20px;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1.5rem;
+  justify-items: center;
 }
 
-.bookmark-card {
-  background: #fff;
-  border-radius: 12px;
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.08);
+.bookmarked-card {
+  background-color: #fff;
+  border-radius: 1rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   overflow: hidden;
-  transition: transform 0.2s ease-in-out;
-  cursor: pointer;
+  width: 100%;
+  max-width: 300px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: transform 0.2s ease;
 }
 
-.bookmark-card:hover {
+.bookmarked-card:hover {
   transform: translateY(-5px);
 }
 
-.bookmark-img {
+.bookmarked-card img {
   width: 100%;
-  height: 160px;
+  height: 180px;
   object-fit: cover;
+  border-top-left-radius: 1rem;
+  border-top-right-radius: 1rem;
 }
 
-.bookmark-content {
-  padding: 15px;
-}
-
-.bookmark-content h2 {
+.bookmarked-card h3 {
   font-size: 1.2rem;
-  margin-bottom: 8px;
+  margin: 1rem 0 0.5rem;
+  padding: 0 1rem;
+  text-align: center;
+  color: #222;
 }
 
-.bookmark-content p {
-  font-size: 0.9rem;
-  color: #666;
-  margin-bottom: 12px;
-}
-
-.remove-btn {
-  padding: 8px 12px;
-  font-size: 0.85rem;
-  background-color: #f44336;
+.bookmarked-card button {
+  background-color: #ff4d4f;
   color: white;
   border: none;
-  border-radius: 6px;
+  padding: 0.6rem 1rem;
+  margin-bottom: 1rem;
+  margin-top: auto;
+  border-radius: 0.5rem;
   cursor: pointer;
   transition: background-color 0.3s ease;
 }
 
-.remove-btn:hover {
-  background-color: #d32f2f;
-}
-
-@media (max-width: 768px) {
-  .bookmark-img {
-    height: 140px;
-  }
+.bookmarked-card button:hover {
+  background-color: #d9363e;
 }
