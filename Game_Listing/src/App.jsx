@@ -1,21 +1,18 @@
-import { useState } from 'react';
-import { Outlet, useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import './App.css';
 import Header from './components/Header';
 import Sidebar from './components/SideBar';
-import GameList from './components/GameList';
+import { Outlet } from 'react-router-dom';
 
 function App() {
-  const [count, setCount] = useState(0);
   const location = useLocation();
-  const isBookmarkPage = location.pathname === "/bookmarks"; // Hide sidebar on bookmarks page
+  const isBookmarkPage = location.pathname === "/bookmarks";
 
   return (
     <>
       <Header />
-      {!isBookmarkPage && <Sidebar />} {/* Sidebar is hidden on bookmarks page */}
+      {!isBookmarkPage && <Sidebar />}
       <Outlet />
-      {/* <GameList/> */}
     </>
   );
 }
