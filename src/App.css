@@ -27,7 +27,7 @@ body {
   justify-content: space-between;
   padding: 0 20px;
   flex-wrap: wrap;
-  gap: 10px;
+  gap: 8px;
   position: relative;
 }
 
@@ -303,8 +303,17 @@ body {
   font-size: 14px;
   color: #666;
 }
-
-
-
-
-
+.show-filter {
+  display: flex;
+  left: 20px;
+  top: 75px;
+  z-index: 202;
+  padding: 5px;
+  border: none;
+  outline: none;
+  transition: 0.3s;
+  background-image: linear-gradient(#111c5c, #16338b);
+  img {
+    height: 20px;
+  }
+}

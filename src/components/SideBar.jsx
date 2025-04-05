@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import "./SideBar.css";
 import { tagAndGenre } from "../utils/FetchGames";
 
-const Sidebar = ({ onApplyFilters, onResetFilters }) => {
+const Sidebar = ({ onApplyFilters, onResetFilters, isSidebarOpen }) => {
   const [filters, setFilters] = useState({
     genre: "",
     tag: "",
@@ -65,7 +65,7 @@ const Sidebar = ({ onApplyFilters, onResetFilters }) => {
   };
 
   return (
-    <div className="sidebar open">
+    <div className="sidebar" style={{left: isSidebarOpen ? "0" : "-100%"}}>
       <div className="sidebar-content">
         <h2>Filters</h2>
 
