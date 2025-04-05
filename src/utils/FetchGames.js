@@ -37,3 +37,19 @@ export const searchGames = async (query) => {
   }
   
 };
+
+
+export const tagAndGenre = async (query) => {
+
+  try{
+    const response = await fetch(`${API_URL}/${query}?key=${API_KEY}`);
+        if (!response.ok) throw new Error("Failed to fetch games");
+        const data= await response.json();
+        return data.results;
+  }
+  catch (error) {
+    console.error("Error fetching game:", error);
+    return null;
+
+  }
+}

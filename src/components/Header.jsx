@@ -61,7 +61,7 @@ const Header = () => {
           <span role="img" aria-label="game-icon" className="fs-3">
             🎮
           </span>
-          Game Listing
+          Playverse
         </Link>
 
         {/* Search Bar (Desktop Only) */}

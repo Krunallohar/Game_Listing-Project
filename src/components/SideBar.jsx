@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./SideBar.css";
+import { tagAndGenre } from "../utils/FetchGames";
 
 const Sidebar = ({ onApplyFilters, onResetFilters }) => {
   const [filters, setFilters] = useState({
@@ -12,15 +13,42 @@ const Sidebar = ({ onApplyFilters, onResetFilters }) => {
   const [genres, setGenres] = useState([]);
   const [tags, setTags] = useState([]);
 
-  useEffect(() => {
-    fetch("https://api.rawg.io/api/genres?key=194d1de13bf04a3fa84eedccbd36e579")
-      .then((res) => res.json())
-      .then((data) => setGenres(data.results));
+  // useEffect(() => {
+  //   fetch("https://api.rawg.io/api/genres?key=194d1de13bf04a3fa84eedccbd36e579")
+  //     .then((res) => res.json())
+  //     .then((data) => setGenres(data.results));
 
-    fetch("https://api.rawg.io/api/tags?key=194d1de13bf04a3fa84eedccbd36e579")
-      .then((res) => res.json())
-      .then((data) => setTags(data.results));
+  //   fetch("https://api.rawg.io/api/tags?key=194d1de13bf04a3fa84eedccbd36e579")
+  //     .then((res) => res.json())
+  //     .then((data) => setTags(data.results));
+  // }, []);
+
+
+  useEffect(() => {
+    const fetchCategory = async () => {
+      try {
+        const gameData = await tagAndGenre("genres");
+        setGenres(gameData);
+      } catch (error) {
+        console.error("Error fetching categories:", error);
+      }
+    };
+    fetchCategory();
   }, []);
+
+  useEffect(() => {
+    const fetchTags = async () => {
+      try {
+        const gameData = await tagAndGenre("tags");
+        setTags(gameData);
+      } catch (error) {
+        console.error("Error fetching tags:", error);
+      }
+    };
+    fetchTags();
+  }, []);
+
+
 
   const handleFilterChange = (e) => {
     const { name, value } = e.target;
@@ -53,6 +81,7 @@ const Sidebar = ({ onApplyFilters, onResetFilters }) => {
             ))}
           </select>
         </div>
+        
 
         {/* Tags Filter */}
         <div className="filter-group">
