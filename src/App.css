@@ -233,6 +233,28 @@ body {
   text-align: center;
 }
 
+/* Custom style for Sign In / Sign Up button */
+.btn.btn-outline-primary.ms-3 {
+  padding: 8px 20px;
+  border: 2px solid #007bff;
+  border-radius: 30px;
+  font-weight: 600;
+  font-size: 14px;
+  background-color: transparent;
+  color: #007bff;
+  transition: all 0.3s ease;
+}
+
+.btn.btn-outline-primary.ms-3:hover {
+  background-color: #007bff;
+  color: #ffffff;
+  box-shadow: 0 0 10px rgba(0, 123, 255, 0.4);
+}
+
+.btn.btn-outline-primary.ms-3:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.3);
+}
 
 
 
