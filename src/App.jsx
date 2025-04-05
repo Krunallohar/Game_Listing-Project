@@ -8,7 +8,8 @@ import { useUser } from '@clerk/clerk-react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setUserId, clearBookmarks } from './redux/bookmarkSlice';
 
-const SidebarContext = createContext()
+const SidebarContext = createContext();
+
 function App() {
   const location = useLocation();
   const isBookmarkPage = location.pathname === "/bookmarks";
@@ -16,7 +17,7 @@ function App() {
   const dispatch = useDispatch();
   const { isSignedIn, user, isLoaded } = useUser();
   const userId = useSelector((state) => state.bookmark.userId);
-  const [isSidebarOpen, setIsSidebarOpen] = useState(true); // ← Sidebar visibility state
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   useEffect(() => {
     if (isLoaded) {
@@ -29,18 +30,34 @@ function App() {
   }, [isSignedIn, user, isLoaded, dispatch, userId]);
 
   return (
-    <SidebarContext.Provider value={{isSidebarOpen, setIsSidebarOpen}}>
+    <SidebarContext.Provider value={{ isSidebarOpen, setIsSidebarOpen }}>
       <Header />
       <div className="app-layout">
+        
+        {/* Sidebar Only on Specific Pages */}
         {!(isBookmarkPage || isGameDetailPage) && (
-          <Sidebar onToggleSidebar={setIsSidebarOpen}/>
+          <>
+            <Sidebar
+              onApplyFilters={() => {}}
+              onResetFilters={() => {}}
+              isSidebarOpen={isSidebarOpen}
+              onToggleSidebar={() => setIsSidebarOpen(prev => !prev)}
+            />
+
+            {/* Show Filters Button when Sidebar is closed */}
+            {!isSidebarOpen && (
+              <button
+                className="open-sidebar-btn"
+                onClick={() => setIsSidebarOpen(true)}
+              >
+                Show Filters
+              </button>
+            )}
+          </>
         )}
 
-        <div
-          className="main-content"
-          style={{ marginLeft: isSidebarOpen ? "250px" : "60px", transition: "margin-left 0.3s ease" }}
-        >
-          <Outlet/>
+        <div className="main-content" style={{ transition: "margin-left 0.3s ease" }}>
+          <Outlet />
         </div>
       </div>
     </SidebarContext.Provider>

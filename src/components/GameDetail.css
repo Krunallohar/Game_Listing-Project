@@ -24,11 +24,9 @@
 
 .game-detail-box {
   background-color: #ffffff;
-  margin-left: -240px;
   border-radius: 12px;
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
   overflow: hidden;
-  
 }
 
 .game-image-full {
@@ -41,6 +39,7 @@
 
 .game-detail-content {
   padding: 25px;
+  box-sizing: border-box;
 }
 
 .title-bookmark-container {
@@ -87,13 +86,24 @@
   display: flex;
   gap: 20px;
   font-size: 1rem;
-  flex-wrap: wrap;
+  /* flex-wrap: wrap; */
 }
 
 .game-description {
   color: #333;
   line-height: 1.6;
   margin-bottom: 30px;
+  font-size: 1rem;
+  max-width: 100%;
+  width: 100%;
+  box-sizing: border-box;
+
+  /* Prevent text truncation */
+  white-space: normal;
+  overflow: visible;
+  text-overflow: unset;
+  max-height: none;
+  display: block;
 }
 
 .screenshot-slider {
@@ -114,7 +124,6 @@
   border-radius: 10px;
 }
 
-/* Requirements */
 .requirements-section {
   margin-top: 30px;
   padding-top: 20px;
@@ -148,5 +157,31 @@
     flex-direction: column;
     align-items: flex-start;
     gap: 10px;
+  }
+
+  .game-title {
+    font-size: 1.7rem;
+  }
+
+  .game-detail-content {
+    padding: 20px;
+  }
+
+  .game-description {
+    font-size: 0.95rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .game-detail-content {
+    padding: 15px;
+  }
+
+  .game-title {
+    font-size: 1.5rem;
+  }
+
+  .game-description {
+    font-size: 0.9rem;
   }
 }

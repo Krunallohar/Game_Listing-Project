@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import "./SideBar.css";
 import { tagAndGenre } from "../utils/FetchGames";
 
-const Sidebar = ({ onApplyFilters, onResetFilters, isSidebarOpen }) => {
+const Sidebar = ({ onApplyFilters, onResetFilters, isSidebarOpen, onToggleSidebar }) => {
   const [filters, setFilters] = useState({
     genre: "",
     tag: "",
@@ -13,24 +13,13 @@ const Sidebar = ({ onApplyFilters, onResetFilters, isSidebarOpen }) => {
   const [genres, setGenres] = useState([]);
   const [tags, setTags] = useState([]);
 
-  // useEffect(() => {
-  //   fetch("https://api.rawg.io/api/genres?key=194d1de13bf04a3fa84eedccbd36e579")
-  //     .then((res) => res.json())
-  //     .then((data) => setGenres(data.results));
-
-  //   fetch("https://api.rawg.io/api/tags?key=194d1de13bf04a3fa84eedccbd36e579")
-  //     .then((res) => res.json())
-  //     .then((data) => setTags(data.results));
-  // }, []);
-
-
   useEffect(() => {
     const fetchCategory = async () => {
       try {
         const gameData = await tagAndGenre("genres");
         setGenres(gameData);
       } catch (error) {
-        console.error("Error fetching categories:", error);
+        console.error("Error fetching genres:", error);
       }
     };
     fetchCategory();
@@ -48,8 +37,6 @@ const Sidebar = ({ onApplyFilters, onResetFilters, isSidebarOpen }) => {
     fetchTags();
   }, []);
 
-
-
   const handleFilterChange = (e) => {
     const { name, value } = e.target;
     setFilters((prevFilters) => ({ ...prevFilters, [name]: value }));
@@ -65,39 +52,31 @@ const Sidebar = ({ onApplyFilters, onResetFilters, isSidebarOpen }) => {
   };
 
   return (
-    <div className="sidebar">
-      {/* style={{left: isSidebarOpen ? "0" : "-100%"}} */}
+    <div className="sidebar" style={{ left: isSidebarOpen ? "0" : "-100%" }}>
       <div className="sidebar-content">
+        <button className="hide-sidebar-btn" onClick={onToggleSidebar}>✖</button>
         <h2>Filters</h2>
 
-        {/* Genre Filter */}
         <div className="filter-group">
           <label>Genre:</label>
           <select name="genre" value={filters.genre} onChange={handleFilterChange}>
             <option value="">All</option>
             {genres.map((genre) => (
-              <option key={genre.id} value={genre.slug}>
-                {genre.name}
-              </option>
+              <option key={genre.id} value={genre.slug}>{genre.name}</option>
             ))}
           </select>
         </div>
-        
 
-        {/* Tags Filter */}
         <div className="filter-group">
           <label>Tags:</label>
           <select name="tag" value={filters.tag} onChange={handleFilterChange}>
             <option value="">All</option>
             {tags.map((tag) => (
-              <option key={tag.id} value={tag.slug}>
-                {tag.name}
-              </option>
+              <option key={tag.id} value={tag.slug}>{tag.name}</option>
             ))}
           </select>
         </div>
 
-        {/* Release Year Filter */}
         <div className="filter-group">
           <label>Release Year:</label>
           <input
@@ -109,7 +88,6 @@ const Sidebar = ({ onApplyFilters, onResetFilters, isSidebarOpen }) => {
           />
         </div>
 
-        {/* Popularity Filter */}
         <div className="filter-group">
           <label>Popularity:</label>
           <select name="ordering" value={filters.ordering} onChange={handleFilterChange}>
@@ -121,13 +99,8 @@ const Sidebar = ({ onApplyFilters, onResetFilters, isSidebarOpen }) => {
           </select>
         </div>
 
-        {/* Apply & Reset Buttons */}
-        <button className="apply-btn" onClick={handleApply}>
-          Apply Filters
-        </button>
-        <button className="reset-btn" onClick={handleReset}>
-          Reset Filters
-        </button>
+        <button className="apply-btn" onClick={handleApply}>Apply Filters</button>
+        <button className="reset-btn" onClick={handleReset}>Reset Filters</button>
       </div>
     </div>
   );

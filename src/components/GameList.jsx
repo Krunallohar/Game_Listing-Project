@@ -9,6 +9,7 @@ const GameList = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [filters, setFilters] = useState({});
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false); // 👈 added this
 
   useEffect(() => {
     const loadGames = async () => {
@@ -24,6 +25,7 @@ const GameList = () => {
   const handleApplyFilters = (newFilters) => {
     setFilters(newFilters);
     setCurrentPage(1);
+    setIsSidebarOpen(false); // 👈 optional: auto-close on apply
   };
 
   const handleResetFilters = () => {
@@ -33,7 +35,20 @@ const GameList = () => {
 
   return (
     <div className="game-page">
-      <Sidebar onApplyFilters={handleApplyFilters} onResetFilters={handleResetFilters} />
+      <Sidebar
+        isSidebarOpen={isSidebarOpen}
+        onToggleSidebar={() => setIsSidebarOpen((prev) => !prev)}
+        onApplyFilters={handleApplyFilters}
+        onResetFilters={handleResetFilters}
+      />
+
+      {/* 👇 Show Filters Button when Sidebar is closed */}
+      {!isSidebarOpen && (
+        <button className="open-sidebar-btn" onClick={() => setIsSidebarOpen(true)}>
+          Show Filters
+        </button>
+      )}
+
       <div className="game-list-container">
         <div className="game-list">
           {games.map((game) => (

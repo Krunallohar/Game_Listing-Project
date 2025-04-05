@@ -87,7 +87,7 @@ const GameDetail = () => {
           </div>
 
           <div className="game-description">
-            <p dangerouslySetInnerHTML={{ __html: game.description }} />
+            {game.description_raw}
           </div>
 
           {game.screenshots?.length > 0 && (
