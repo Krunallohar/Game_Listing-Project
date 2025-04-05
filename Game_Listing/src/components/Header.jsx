@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { FaBars, FaTimes } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
-import { SignedIn, SignedOut, UserButton, SignInButton } from "@clerk/clerk-react";
+import { SignedIn, SignedOut, UserButton, SignInButton, useUser } from "@clerk/clerk-react";
+import { useDispatch, useSelector } from "react-redux";
+import { setUserId } from "../redux/bookmarkSlice";
 import { searchGames } from "../utils/FetchGames";
 import "./Header.css";
 
@@ -10,6 +12,17 @@ const Header = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [searchResults, setSearchResults] = useState([]);
   const navigate = useNavigate();
+
+  const dispatch = useDispatch();
+  const { user, isLoaded } = useUser();
+  const { userId } = useSelector((state) => state.bookmark);
+
+  // 🔄 Set user ID in Redux when signed in
+  useEffect(() => {
+    if (isLoaded && user?.id && user?.id !== userId) {
+      dispatch(setUserId(user.id));
+    }
+  }, [isLoaded, user, userId, dispatch]);
 
   useEffect(() => {
     const fetchSearchResults = async () => {
@@ -71,14 +84,11 @@ const Header = () => {
         {/* Bookmark & Auth Section */}
         <div className="header-right">
           <SignedIn>
-            {/* Bookmark visible only when signed in */}
             <Link to="/bookmarks" className="bookmark-btn">🔖 Bookmark</Link>
-            {/* Auth user button on right side */}
             <UserButton afterSignOutUrl="/" />
           </SignedIn>
 
           <SignedOut>
-            {/* Show sign in / sign up when not signed in */}
             <SignInButton mode="modal">
               <button className="btn btn-outline-primary ms-3">Sign In / Sign Up</button>
             </SignInButton>

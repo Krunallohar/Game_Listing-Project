@@ -5,7 +5,7 @@ import Header from './components/Header';
 import Sidebar from './components/SideBar';
 import { Outlet } from 'react-router-dom';
 import { useUser } from '@clerk/clerk-react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { setUserId, clearBookmarks } from './redux/bookmarkSlice';
 
 function App() {
@@ -13,17 +13,19 @@ function App() {
   const isBookmarkPage = location.pathname === "/bookmarks";
   const isGameDetailPage = location.pathname.startsWith("/game/");
   const dispatch = useDispatch();
-  const { isSignedIn, user } = useUser();
+  const { isSignedIn, user, isLoaded } = useUser();
+  const userId = useSelector((state) => state.bookmark.userId);
 
   useEffect(() => {
-    if (isSignedIn && user?.id) {
-      // Set user ID and load bookmarks from localStorage
-      dispatch(setUserId(user.id));
-    } else {
-      // Clear user ID and bookmarks when signed out
-      dispatch(clearBookmarks());
+    // Only update when Clerk is loaded
+    if (isLoaded) {
+      if (isSignedIn && user?.id && user?.id !== userId) {
+        dispatch(setUserId(user.id));
+      } else if (!isSignedIn && userId !== null) {
+        dispatch(clearBookmarks());
+      }
     }
-  }, [isSignedIn, user, dispatch]);
+  }, [isSignedIn, user, isLoaded, dispatch, userId]);
 
   return (
     <>
