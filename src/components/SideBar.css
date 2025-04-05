@@ -76,9 +76,9 @@
     margin-top: 5px;
   }
 
-  @media screen and (max-width: 620px) {
+  /* @media screen and (max-width: 620px) {
     .sidebar {
       left: -100%;
       z-index: 200;
     }
-  }
+  } */

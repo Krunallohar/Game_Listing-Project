@@ -303,7 +303,7 @@ body {
   font-size: 14px;
   color: #666;
 }
-.show-filter {
+/* .show-filter {
   display: flex;
   left: 20px;
   top: 75px;
@@ -316,4 +316,4 @@ body {
   img {
     height: 20px;
   }
-}
+} */

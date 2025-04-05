@@ -65,7 +65,8 @@ const Sidebar = ({ onApplyFilters, onResetFilters, isSidebarOpen }) => {
   };
 
   return (
-    <div className="sidebar" style={{left: isSidebarOpen ? "0" : "-100%"}}>
+    <div className="sidebar">
+      {/* style={{left: isSidebarOpen ? "0" : "-100%"}} */}
       <div className="sidebar-content">
         <h2>Filters</h2>
 
