@@ -7,22 +7,18 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  position: fixed;  /* 🔥 Makes the header fixed */
-  top: 0;           /* 🔥 Keeps it at the top */
+  position: fixed;
+  top: 0;
   left: 0;
   width: 100%;
-  z-index: 1000;    /* 🔥 Ensures it stays above all content */
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Optional: Adds a shadow for better visibility */
-  
+  z-index: 1000;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-/* Add padding to body to prevent content from being hidden behind the fixed header */
 body {
-  padding-top: 70px; /* Adjust this value based on header height */
+  padding-top: 70px;
 }
 
-
-/* Header Content */
 .header-content {
   width: 100%;
   max-width: 1200px;
@@ -30,8 +26,9 @@ body {
   align-items: center;
   justify-content: space-between;
   padding: 0 20px;
-
-  
+  flex-wrap: wrap;
+  gap: 10px;
+  position: relative;
 }
 
 /* Logo */
@@ -44,11 +41,12 @@ body {
   gap: 10px;
 }
 
-/* Search Bar Container (Centered) */
+/* Search Bar Container */
 .search-bar-container {
   flex-grow: 1;
   display: flex;
   justify-content: center;
+  min-width: 300px;
 }
 
 /* Search Bar */
@@ -80,11 +78,14 @@ body {
   border-radius: 5px;
 }
 
-/* Bookmark Button (Hidden in mobile) */
-.bookmark-desktop {
-  display: block;
+/* Bookmark + User Icon container */
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
 }
 
+/* Bookmark Button */
 .bookmark-btn {
   padding: 10px 20px;
   background-color: #ffc107;
@@ -96,31 +97,37 @@ body {
   text-decoration: none;
 }
 
+/* Desktop only */
+.bookmark-desktop {
+  display: block;
+}
+
 /* Hamburger Menu */
 .hamburger {
   font-size: 24px;
   color: white;
   cursor: pointer;
   display: none;
+  order: -1; /* ensures it comes first in flex container */
+  margin-right: auto;
 }
 
-/* Mobile Dropdown Menu */
+/* Mobile Dropdown */
 .mobile-menu {
   display: none;
   flex-direction: column;
   align-items: center;
   background: #333;
   position: absolute;
-  top: 100%; /* Opens below the header */
+  top: 100%;
   left: 0;
   width: 100%;
   padding: 15px;
   box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
   transition: all 0.3s ease-in-out;
+  z-index: 999;
 }
 
-
-/* Open state for mobile menu */
 .mobile-menu.open {
   display: flex;
 }
@@ -131,34 +138,45 @@ body {
   }
 }
 
-/* Mobile menu search bar */
 .mobile-menu .search-bar {
   margin-bottom: 10px;
   width: 90%;
 }
 
-/* Mobile menu bookmark button */
 .mobile-menu .bookmark-btn {
   display: block;
   width: 90%;
 }
 
-/* Responsive Styles */
+/* Responsive Fixes */
 @media (max-width: 768px) {
   .search-bar-container {
     display: none;
   }
 
   .bookmark-desktop {
-    display: none; /* Hide desktop bookmark */
+    display: none;
   }
 
   .hamburger {
     display: block;
   }
+
+  .header-content {
+    flex-direction: row;
+    justify-content: space-between;
+    flex-wrap: nowrap;
+    align-items: center;
+  }
+
+  .header-right {
+    justify-content: center;
+    margin-top: 10px;
+    gap: 0.5rem;
+  }
 }
 
-/* Ensure search bar is always in one line */
+/* Mobile search bar specific */
 .mobile-menu .search-bar {
   display: flex;
   align-items: center;
@@ -166,20 +184,18 @@ body {
   max-width: 320px;
   background: white;
   border-radius: 5px;
-  overflow: hidden; /* Prevents elements from breaking out */
+  overflow: hidden;
   padding: 0;
 }
 
-/* Search Input - Takes Full Space */
 .mobile-menu .search-bar input {
   flex: 1;
   border: none;
   padding: 10px;
   font-size: 14px;
-  min-width: 0; /* Prevents stretching issues */
+  min-width: 0;
 }
 
-/* Search Button - Fixed Width */
 .mobile-menu .search-bar button {
   padding: 10px 15px;
   border: none;
@@ -189,15 +205,33 @@ body {
   cursor: pointer;
   border-radius: 0 5px 5px 0;
   white-space: nowrap;
-  min-width: 70px; /* Prevents shrinking */
+  min-width: 70px;
   text-align: center;
 }
 
-/* Fix Overflow Issues */
 .mobile-menu .search-bar input:focus {
   outline: none;
 }
 
+/* Hide desktop-only items on mobile */
+@media (max-width: 768px) {
+  .desktop-only {
+    display: none !important;
+  }
+}
+
+/* Optional: style user profile button in mobile view */
+.mobile-menu .cl-userButtonBox {
+  margin-top: 10px;
+  display: flex;
+  justify-content: center;
+}
+
+.mobile-menu .bookmark-btn {
+  width: 90%;
+  margin: 10px auto;
+  text-align: center;
+}
 
 
 

@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import './App.css';
 import Header from './components/Header';
@@ -15,9 +15,9 @@ function App() {
   const dispatch = useDispatch();
   const { isSignedIn, user, isLoaded } = useUser();
   const userId = useSelector((state) => state.bookmark.userId);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(true); // ← Sidebar visibility state
 
   useEffect(() => {
-    // Only update when Clerk is loaded
     if (isLoaded) {
       if (isSignedIn && user?.id && user?.id !== userId) {
         dispatch(setUserId(user.id));
@@ -30,8 +30,18 @@ function App() {
   return (
     <>
       <Header />
-      {!(isBookmarkPage || isGameDetailPage) && <Sidebar />}
-      <Outlet />
+      <div className="app-layout">
+        {!(isBookmarkPage || isGameDetailPage) && (
+          <Sidebar onToggleSidebar={setIsSidebarOpen} />
+        )}
+
+        <div
+          className="main-content"
+          style={{ marginLeft: isSidebarOpen ? "250px" : "60px", transition: "margin-left 0.3s ease" }}
+        >
+          <Outlet />
+        </div>
+      </div>
     </>
   );
 }

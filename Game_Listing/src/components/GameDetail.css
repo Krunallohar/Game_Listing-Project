@@ -8,7 +8,7 @@
 .back-button {
   position: absolute;
   top: -35px;
-  left: 010;
+  left: -227px;
   padding: 8px 16px;
   border: none;
   background-color: #333;
@@ -24,9 +24,11 @@
 
 .game-detail-box {
   background-color: #ffffff;
+  margin-left: -240px;
   border-radius: 12px;
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
   overflow: hidden;
+  
 }
 
 .game-image-full {
