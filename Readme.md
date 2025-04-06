@@ -61,7 +61,7 @@ npm run dev
 
 Then open your browser at: http://localhost:5173
 
-🌍 Folder Structure
+## 🌍 Folder Structure
 
 src/
 ├── assets/              # Static assets like images
@@ -73,16 +73,16 @@ src/
 ├── main.jsx             # Entry point
 └── store.js             # Redux store setup
 
-🔐 Auth & Bookmarks
+## 🔐 Auth & Bookmarks
 ->Uses Clerk for secure login/signup.
 
-B->ookmarked games are stored per authenticated user.
+->Bookmarked games are stored per authenticated user.
 
 ->Bookmarks are saved to localStorage with user ID for persistence.
 
 ->Sign in required to access bookmark page.
 
-📦 Build & Deploy (Netlify)
+## 📦 Build & Deploy (Netlify)
 Add _redirects file to public/:
 /*    /index.html   200
 
@@ -93,7 +93,7 @@ Deploy the dist/ folder to Netlify or any other static host.
 Live App URL: http://gamelisting.netlify.app
 
 
-🙌 Acknowledgements
+## 🙌 Acknowledgements
 RAWG Video Games Database API
 
 Clerk.dev
