@@ -26,7 +26,7 @@ GameVerse is a modern React web app for discovering, filtering, and bookmarking 
 - React Router DOM
 - Clerk Authentication
 - RAWG API
-- Bootstrap & CSS Modules
+- Bootstrap & Vanilla CSS
 
 ---
 
@@ -35,8 +35,8 @@ GameVerse is a modern React web app for discovering, filtering, and bookmarking 
 ### 1. Clone the repository
 
 ```bash
-git clone https://github.com/your-username/gameverse.git
-cd gameverse
+git clone https://github.com/Krunallohar/Game_Listing-Project.git
+cd Game_Listing-Project
 
 ```
 ### 2. Install dependencies
@@ -61,7 +61,7 @@ npm run dev
 
 Then open your browser at: http://localhost:5173
 
-## 🌍 Folder Structure
+ 🌍 Folder Structure
 
 src/
 ├── assets/              # Static assets like images
