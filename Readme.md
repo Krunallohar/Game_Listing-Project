@@ -61,17 +61,6 @@ npm run dev
 
 Then open your browser at: http://localhost:5173
 
- 🌍 Folder Structure
-
-src/
-├── assets/              # Static assets like images
-├── components/          # Reusable UI components
-├── pages/               # Route views (Game Detail, Home)
-├── redux/               # Store and slices (bookmarkSlice, etc.)
-├── utils/               # API functions (fetchGameDetails, etc.)
-├── App.jsx              # Main routing component
-├── main.jsx             # Entry point
-└── store.js             # Redux store setup
 
 ## 🔐 Auth & Bookmarks
 ->Uses Clerk for secure login/signup.
@@ -93,13 +82,5 @@ Deploy the dist/ folder to Netlify or any other static host.
 Live App URL: http://gamelisting.netlify.app
 
 
-## 🙌 Acknowledgements
-RAWG Video Games Database API
-
-Clerk.dev
-
-Bootstrap
-
-Vite
 
 
