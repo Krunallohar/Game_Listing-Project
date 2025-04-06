@@ -2,9 +2,10 @@ import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { addBookmark, removeBookmark } from "../redux/bookmarkSlice";
+import { SignedIn, SignedOut, SignInButton, useUser } from "@clerk/clerk-react";
 import { FaRegBookmark, FaBookmark } from "react-icons/fa";
-import { SignedIn, SignedOut, useUser, SignInButton } from "@clerk/clerk-react";
 import "./GameDetail.css";
+
 
 const GameDetail = () => {
   const { id } = useParams();
@@ -46,11 +47,13 @@ const GameDetail = () => {
       <button className="back-button" onClick={() => navigate(-1)}>← Back</button>
 
       <div className="game-detail-box">
-        <img
-          src={game.background_image}
-          alt={game.name}
-          className="game-image-full"
-        />
+        <div className="game-image-wrapper">
+          <img
+            src={game.background_image}
+            alt={game.name}
+            className="game-image-full"
+          />
+        </div>
 
         <div className="game-detail-content">
           <div className="title-bookmark-container">
@@ -86,9 +89,7 @@ const GameDetail = () => {
             <span>📅 Released: {game.released}</span>
           </div>
 
-          <div className="game-description">
-            {game.description_raw}
-          </div>
+          <div className="game-description">{game.description_raw}</div>
 
           {game.screenshots?.length > 0 && (
             <div className="screenshot-slider">
@@ -106,22 +107,27 @@ const GameDetail = () => {
             </div>
           )}
 
-          {game.platforms && (
-            <div className="requirements-section">
-              <h3>System Requirements</h3>
-              {game.platforms.map((platform, idx) => (
-                <div key={idx} className="platform-block">
-                  <strong>{platform.platform.name}</strong>
-                  {platform.requirements?.minimum && (
-                    <p>🧾 Min: {platform.requirements.minimum}</p>
-                  )}
-                  {platform.requirements?.recommended && (
-                    <p>✅ Recommended: {platform.requirements.recommended}</p>
-                  )}
-                </div>
-              ))}
-            </div>
+{game.platforms && (
+  <div className="requirements-section">
+    <h3>System Requirements</h3>
+    {game.platforms
+      .filter((platform) =>
+        ["PC", "macintosh"].includes(platform.platform.name)
+      )
+      .map((platform, idx) => (
+        <div key={idx} className="platform-block">
+          <strong>{platform.platform.name}</strong>
+          {platform.requirements?.minimum && (
+            <p>🧾 Min: {platform.requirements.minimum}</p>
           )}
+          {platform.requirements?.recommended && (
+            <p>✅ Recommended: {platform.requirements.recommended}</p>
+          )}
+        </div>
+      ))}
+  </div>
+)}
+
         </div>
       </div>
     </div>
